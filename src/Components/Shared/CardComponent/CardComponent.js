@@ -2,25 +2,26 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea } from '@mui/material';
 import { Box } from '@mui/system';
+import { useStyles } from './CardComponentStyles'
 
-const CardComponent = () => {
+const CardComponent = ({ calculation }) => {
+    const classes = useStyles();
     return (
         <Card sx={{ my: 2 }}>
-            <CardActionArea>
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        Title
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                    {calculation.title}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
+                    <Typography >
+                        = {calculation.result}
                     </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
-                        <Typography >
-                            = 254
-                        </Typography>
-                        <Button variant="outlined">See Input</Button>
+                    <Box className={classes.seeInputBtn}>
+                        See Input
                     </Box>
-                </CardContent>
-            </CardActionArea>
+                </Box>
+            </CardContent>
         </Card>
     );
 }
