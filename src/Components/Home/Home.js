@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CardComponent from '../Shared/CardComponent/CardComponent';
 import HeaderComponent from '../Shared/HeaderComponent/HeaderComponent';
+import Modal from '../Shared/Modal/Modal';
 
 const calculationsData = [
     {
@@ -66,6 +67,11 @@ const Home = () => {
     const [calculations, setCalculations] = useState(calculationsData);
     const [endIndex, setEndIndex] = useState(3);
     const calculationsToShow = calculations.slice(0, endIndex);
+    const [open, setOpen] = useState(false);
+
+    const handleModalOpen = () => {
+        setOpen(true);
+    };
 
     function handleOnDragEnd(result) {
         if (!result.destination) return;
@@ -88,6 +94,7 @@ const Home = () => {
 
     return (
         <div >
+            <Modal open={open} setOpen={setOpen} />
             <HeaderComponent />
             <Container maxWidth="sm" sx={{ mt: 2 }} id="scrollableDiv"
                 style={{
@@ -120,7 +127,7 @@ const Home = () => {
                                             <Draggable key={each.id} draggableId={each.id} index={index}>
                                                 {(provided) => (
                                                     <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                                                        <CardComponent calculation={each} />
+                                                        <CardComponent calculation={each} handleModalOpen={handleModalOpen} />
                                                     </Box>
                                                 )}
                                             </Draggable>

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import { useStyles } from './CardComponentStyles'
 
-const CardComponent = ({ calculation }) => {
+const CardComponent = ({ calculation, handleModalOpen }) => {
     const classes = useStyles();
     return (
         <Card sx={{ my: 2 }}>
@@ -17,7 +17,7 @@ const CardComponent = ({ calculation }) => {
                     <Typography >
                         = {calculation.result}
                     </Typography>
-                    <Box className={classes.seeInputBtn}>
+                    <Box className={classes.seeInputBtn} onClick={handleModalOpen}>
                         See Input
                     </Box>
                 </Box>
