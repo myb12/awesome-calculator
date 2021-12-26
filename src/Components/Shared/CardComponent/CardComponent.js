@@ -7,13 +7,13 @@ import { Box } from '@mui/system';
 
 const CardComponent = () => {
     return (
-        <Card>
+        <Card sx={{ my: 2 }}>
             <CardActionArea>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                         Title
                     </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'space-between',}}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
                         <Typography >
                             = 254
                         </Typography>
