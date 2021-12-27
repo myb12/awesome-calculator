@@ -5,7 +5,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-export default function Modal({ open, setOpen }) {
+export default function Modal({ open, setOpen, seeInput }) {
+    const { title, value, fileName, output } = seeInput;
 
     const handleClose = () => {
         setOpen(false);
@@ -19,19 +20,19 @@ export default function Modal({ open, setOpen }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <div style={{ width: 300 }}>
+                <div style={{ width: 280 }}>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-description">
-                            FileName
+                            {fileName}
                         </DialogContentText>
                         <DialogContentText id="alert-dialog-description">
-                            Title
+                            {title}
                         </DialogContentText>
                         <DialogContentText id="alert-dialog-description">
-                            Input
+                            {value}
                         </DialogContentText>
                         <DialogContentText id="alert-dialog-description">
-                            Output
+                            {output}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

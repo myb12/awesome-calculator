@@ -1,13 +1,16 @@
 import { Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import useResults from '../../hooks/useResults';
 import CardComponent from '../Shared/CardComponent/CardComponent';
 import HeaderComponent from '../Shared/HeaderComponent/HeaderComponent';
 import Modal from '../Shared/Modal/Modal';
+import { useStyles } from './HomeStyles'
 
 const calculationsData = [
     {
@@ -63,14 +66,24 @@ const calculationsData = [
 ]
 
 const Home = () => {
+    const { results, calculations, setCalculations } = useResults();
     const [file, setFile] = useState(null);
-    const [calculations, setCalculations] = useState(calculationsData);
+    const [value, setValue] = useState('');
+    const [title, setTitle] = useState('');
     const [endIndex, setEndIndex] = useState(3);
     const calculationsToShow = calculations.slice(0, endIndex);
     const [open, setOpen] = useState(false);
+    const [seeInput, setSeeInput] = useState(false);
+    const classes = useStyles();
 
-    const handleModalOpen = () => {
+    useEffect(() => {
+        setCalculations(results);
+    }, [results, setCalculations])
+
+    const handleModalOpen = (id) => {
         setOpen(true);
+        const specific = calculations.find(calc => calc._id === id);
+        setSeeInput(specific);
     };
 
     function handleOnDragEnd(result) {
@@ -82,9 +95,49 @@ const Home = () => {
 
         setCalculations(items);
     }
+
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
+        const reader = new FileReader();
+        reader.readAsText(e.target.files[0]);
+
+        reader.onload = function () {
+            const text = reader.result;
+            const newValue = text.replace(/\s/g, '');
+            setValue(newValue);
+        };
     };
+
+    const handleTitle = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const handleCalculate = () => {
+        const regex = /^[-+]?\d*\.?\d+(?:[-+*/]?\d+)+?$/;
+        const formData = new FormData();
+
+        if (regex.test(value)) {
+            const resultValue = eval(value);
+
+            formData.append('title', title);
+            formData.append('value', value);
+            formData.append('output', resultValue);
+            formData.append('file', file);
+
+
+            axios.post('http://localhost:5000/addCalculation', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+                .then(res => {
+                    if (res) {
+                        console.log('calculated');
+                    }
+                })
+        }
+
+    }
 
     const fetchMore = () => {
         setTimeout(() => {
@@ -94,13 +147,18 @@ const Home = () => {
 
     return (
         <div >
-            <Modal open={open} setOpen={setOpen} />
+            <Modal open={open} setOpen={setOpen} seeInput={seeInput} />
             <HeaderComponent />
             <Container maxWidth="sm" sx={{ mt: 2 }} id="scrollableDiv"
                 style={{
                     height: 400,
                     overflowY: 'scroll',
                 }}>
+                <Box className={classes.mainHeadingContainer}>
+                    <Typography variant='h5' className={classes.mainHeading}>
+                        Screen A
+                    </Typography>
+                </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
                     <Box>
                         <Typography variant='h5'>
@@ -124,7 +182,7 @@ const Home = () => {
                                 >
                                     {calculationsToShow.map((each, index) => {
                                         return (
-                                            <Draggable key={each.id} draggableId={each.id} index={index}>
+                                            <Draggable key={each._id} draggableId={each._id} index={index}>
                                                 {(provided) => (
                                                     <Box ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
                                                         <CardComponent calculation={each} handleModalOpen={handleModalOpen} />
@@ -145,21 +203,23 @@ const Home = () => {
             <Container maxWidth="md" sx={{ mt: 2 }}>
                 <Divider />
             </Container>
-            <Container maxWidth="sm" sx={{ mt: 2, display: 'flex', flexDirection: 'column' }}>
+            <Container maxWidth="sm" sx={{ mt: 2, }}>
                 <Grid container spacing={2}>
-                    <Grid item md={6}>
+                    <Grid item md={6} >
                         <TextField
                             label="Title"
                             id="outlined-size-small"
                             size="small"
+                            onBlur={handleTitle}
                         />
                     </Grid>
                     <Grid item md={6}>
                         <input type="file" id="img" name="img" accept=".txt" onChange={handleFileChange} />
                     </Grid>
                 </Grid>
+                <Button variant="contained" sx={{ mt: 2, }} onClick={handleCalculate}>Contained</Button>
             </Container>
-        </div>
+        </div >
     );
 };
 

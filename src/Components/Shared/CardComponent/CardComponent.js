@@ -15,9 +15,9 @@ const CardComponent = ({ calculation, handleModalOpen }) => {
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
                     <Typography >
-                        = {calculation.result}
+                        = {calculation.output}
                     </Typography>
-                    <Box className={classes.seeInputBtn} onClick={handleModalOpen}>
+                    <Box className={classes.seeInputBtn} onClick={() => handleModalOpen(calculation._id)}>
                         See Input
                     </Box>
                 </Box>
