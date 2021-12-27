@@ -21,9 +21,9 @@ const HeaderComponent = () => {
                 <img src="https://i.ibb.co/p0s93QF/header-dots.png" alt="Three dots" />
                 <span className="color-primary font-bold ml-5">
                     {
-                        currentPage === 'screen-b' ? <Button variant="outlined" onClick={handleScreenA}>
+                        currentPage === 'screen-b' ? <Button variant="outlined" onClick={handleScreenA} style={{ color: '#666', borderColor: '#666' }}>
                             Go to Screen A
-                        </Button> : <Button variant="outlined" onClick={handleScreenB}>
+                        </Button> : <Button variant="outlined" onClick={handleScreenB} style={{ color: '#666', borderColor: '#666' }}>
                             Go to Screen B
                         </Button>
                     }

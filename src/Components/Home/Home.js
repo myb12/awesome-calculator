@@ -1,7 +1,7 @@
-import { Button, Container, Divider, Grid, TextField, Typography } from '@mui/material';
+import { Button, Container, Divider, Grid, Skeleton, TextField, Typography, useMediaQuery } from '@mui/material';
 import { Box } from '@mui/system';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -12,63 +12,11 @@ import CardComponent from '../Shared/CardComponent/CardComponent';
 import HeaderComponent from '../Shared/HeaderComponent/HeaderComponent';
 import Modal from '../Shared/Modal/Modal';
 import SweetAlertComponent from '../Shared/SweetAlertComponent/SweetAlertComponent';
-import { useStyles } from './HomeStyles'
-
-const calculationsData = [
-    {
-        id: '1',
-        title: 'Title-1',
-        result: 456
-    },
-    {
-        id: '2',
-        title: 'Title-2',
-        result: 446
-    },
-    {
-        id: '3',
-        title: 'Title-3',
-        result: 256
-    },
-    {
-        id: '4',
-        title: 'Title-4',
-        result: 756
-    },
-    {
-        id: '5',
-        title: 'Title-5',
-        result: 386
-    },
-    {
-        id: '6',
-        title: 'Title-6',
-        result: 386
-    },
-    {
-        id: '7',
-        title: 'Title-7',
-        result: 386
-    },
-    {
-        id: '8',
-        title: 'Title-8',
-        result: 386
-    },
-    {
-        id: '9',
-        title: 'Title-9',
-        result: 386
-    },
-    {
-        id: '10',
-        title: 'Title-10',
-        result: 386
-    },
-]
+import { useStyles } from './HomeStyles';
+import { AiOutlineCloudUpload } from 'react-icons/ai';
 
 const Home = () => {
-    const { results, calculations, setCalculations, disable, setDisable } = useResults();
+    const { calculations, setCalculations, disable, setDisable } = useResults();
     const [file, setFile] = useState(null);
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
@@ -77,6 +25,8 @@ const Home = () => {
     const [open, setOpen] = useState(false);
     const [seeInput, setSeeInput] = useState(false);
     const [show, setShow] = useState(false);
+    const [skeleton, setSkeleton] = useState(false);
+    const [bottom, setBottom] = useState(false);
     const [message, setMessage] = useState('');
     const history = useHistory();
 
@@ -94,8 +44,18 @@ const Home = () => {
         const items = Array.from(calculations);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
-
         setCalculations(items);
+
+        fetch('http://localhost:5000/update-results', {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(items)
+        })
+            .then(res => res.json())
+            .then(data => { })
+
     }
 
     const handleFileChange = (e) => {
@@ -156,34 +116,35 @@ const Home = () => {
     }
 
     const fetchMore = () => {
+        setSkeleton(true);
         setTimeout(() => {
             setEndIndex(calculations.length);
-        }, 1000);
+            setSkeleton(false);
+            setBottom(true);
+        }, 2000);
     };
 
     return (
-        <div >
+        <div style={{ marginBottom: 50 }}>
             <Modal open={open} setOpen={setOpen} seeInput={seeInput} />
             <SweetAlertComponent show={show} setShow={setShow} message={message} />
             <HeaderComponent />
-            <Container maxWidth="sm" sx={{ mt: 2 }} id="scrollableDiv"
-                style={{
-                    height: 400,
-                    overflowY: 'scroll',
-                }}>
+            <Container maxWidth="sm" sx={{ mt: 2, border: '2px solid #666' }} id="scrollable1"
+            >
                 <Box className={classes.mainHeadingContainer}>
                     <Typography variant='h5' className={classes.mainHeading}>
                         Screen A
                     </Typography>
+
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
                     <Box>
-                        <Typography variant='h5'>
+                        <Typography variant='h5' sx={{ fontWeight: 700,color:'#666' }}>
                             Total Result : {calculations.length}
                         </Typography>
                     </Box>
                     <Box>
-                        <Button onClick={() => history.push('/screen-b')}>All results</Button>
+                        <Button onClick={() => history.push('/screen-b')} style={{ color: '#666' }}>All results</Button>
                     </Box>
                 </Box>
 
@@ -194,8 +155,9 @@ const Home = () => {
                                 <InfiniteScroll
                                     dataLength={calculations.length}
                                     next={fetchMore}
-                                    scrollableTarget="scrollableDiv"
+                                    scrollableTarget="scrollable1"
                                     hasMore={true}
+
                                 >
                                     {calculationsToShow.map((each, index) => {
                                         return (
@@ -208,37 +170,55 @@ const Home = () => {
                                             </Draggable>
                                         );
                                     })}
-
+                                    {
+                                        skeleton && <>  <Skeleton />
+                                            <Skeleton />
+                                            <Skeleton />
+                                        </>
+                                    }
+                                    <p style={{ textAlign: 'center' }}>{bottom && 'All results are revealed'}</p>
                                 </InfiniteScroll>
                                 {provided.placeholder}
                             </div>
                         )}
+
                     </Droppable>
                 </DragDropContext>
 
             </Container>
-            <Container maxWidth="md" sx={{ mt: 2 }}>
-                <Divider />
-            </Container>
-            <Container maxWidth="sm" sx={{ mt: 2, }}>
+
+            <Container maxWidth="sm" sx={{ borderLeft: '2px solid #666', borderRight: '2px solid #666', borderBottom: '2px solid #666' }}>
                 <form onSubmit={handleCalculate}>
-                    <Grid container spacing={2}>
-                        <Grid item md={6} >
-                            <TextField
-                                label="Title"
-                                id="outlined-size-small"
-                                size="small"
-                                onBlur={handleTitle}
-                            />
-                        </Grid>
-                        <Grid item md={6}>
-                            <input type="file" id="img" name="img" accept=".txt" onChange={handleFileChange} />
-                        </Grid>
-                    </Grid>
-                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <Button disabled={disable} variant="outlined" sx={{ my: 2, }} type="submit">
-                            {disable ? 'Calculating Please wait...' : 'Calculate'}
+                    <Box sx={{ mb: 2,pt:2 }}>
+                        <Typography variant="h4" sx={{ mb: 1, color: '#666', fontWeight: 700 }}>
+                            Input
+                        </Typography>
+                        <TextField
+                            label="Calculation title"
+                            id="outlined-size-small"
+                            size="small"
+                            onBlur={handleTitle}
+                            className={classes.root}
+                            sx={{ width: '100%' }}
+                        />
+                    </Box>
+                    <Box>
+                        <Box className="file-upload">
+                            <label htmlFor="file" >
+                                <AiOutlineCloudUpload />
+                            </label>
+                            <input type="file" id="file" name="file" accept=".txt" onChange={handleFileChange} title=" " />
+                            <label htmlFor="file" style={{ fontSize: 18, color: '#666' }}>
+                                Drop your calculation text file here
+                            </label>
+                        </Box>
+                    </Box>
+                    <Box>
+                        <Button type="submit" disabled={disable} variant="outlined" style={{ color: '#666', borderColor: '#666', margin: '10px 0', borderRadius: 20 }}>
+                            Calculate
                         </Button>
+                        <small style={{ color: '#666', marginLeft: 5 }}>{disable && 'Calculating, Please wait...'}</small>
+
                     </Box>
                 </form>
             </Container>

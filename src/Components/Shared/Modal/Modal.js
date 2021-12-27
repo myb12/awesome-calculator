@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import { Box } from '@mui/system';
-import { Typography } from '@mui/material';
 
 export default function Modal({ open, setOpen, seeInput }) {
     const { title, value, fileName, output } = seeInput;
@@ -22,7 +20,7 @@ export default function Modal({ open, setOpen, seeInput }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <div style={{ maxWidth: 400 }}>
+                <div style={{ maxWidth: 400, color: '#666' }}>
                     <DialogContent>
                         <Box sx={{ my: 2 }}>
                             <span style={{ fontSize: 20, fontWeight: 700 }}>File Name:</span> {fileName}

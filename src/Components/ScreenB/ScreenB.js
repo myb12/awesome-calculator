@@ -1,6 +1,6 @@
-import { Button, Container, Typography } from '@mui/material';
+import { Container, Skeleton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import useResults from '../../hooks/useResults';
 import HeaderComponent from '../Shared/HeaderComponent/HeaderComponent';
 import { useStyles } from '../Home/HomeStyles';
@@ -10,19 +10,25 @@ import Modal from '../Shared/Modal/Modal';
 import SweetAlertComponent from '../Shared/SweetAlertComponent/SweetAlertComponent';
 
 const ScreenB = () => {
-    const { results, calculations, setCalculations } = useResults();
+    const { calculations } = useResults();
     const classes = useStyles();
     const [endIndex, setEndIndex] = useState(3);
     const calculationsToShow = calculations.slice(0, endIndex);
     const [open, setOpen] = useState(false);
     const [seeInput, setSeeInput] = useState(false);
+    const [skeleton, setSkeleton] = useState(false);
+    const [bottom, setBottom] = useState(false);
+
 
     console.log(calculations);
 
 
     const fetchMore = () => {
+        setSkeleton(true);
         setTimeout(() => {
             setEndIndex(calculations.length);
+            setBottom(true);
+            setSkeleton(false);
         }, 1000);
     };
 
@@ -35,19 +41,16 @@ const ScreenB = () => {
         <>
             <Modal open={open} setOpen={setOpen} seeInput={seeInput} />
             <HeaderComponent />
-            <Container maxWidth="sm" sx={{ mt: 2 }} id="scrollableDiv"
-                style={{
-                    height: 400,
-                    overflowY: 'scroll',
-                }}>
+            <Container maxWidth="sm" sx={{ mt: 2, border: '2px solid #666' }} id="scrollable2"
+            >
                 <Box className={classes.mainHeadingContainer}>
                     <Typography variant='h5' className={classes.mainHeading}>
                         Screen B
                     </Typography>
                 </Box>
-                <Box sx={{ mb: 3 }}>
+                <Box>
                     <Box>
-                        <Typography variant='h5'>
+                        <Typography variant='h5' sx={{ fontWeight: 700, color: '#666' }}>
                             Total Result : {calculations.length}
                         </Typography>
                         <SweetAlertComponent />
@@ -57,7 +60,7 @@ const ScreenB = () => {
                 <InfiniteScroll
                     dataLength={calculations.length}
                     next={fetchMore}
-                    scrollableTarget="scrollableDiv"
+                    scrollableTarget="scrollable2"
                     hasMore={true}
                 >
                     {calculationsToShow.map((each, index) => {
@@ -67,6 +70,15 @@ const ScreenB = () => {
                             </Box>
                         );
                     })}
+                    {
+                        skeleton && <>  <Skeleton />
+                            <Skeleton />
+                            <Skeleton />
+                        </>
+                    }
+                    {
+                        <p style={{ textAlign: 'center' }}>{bottom && 'All results are revealed'}</p>
+                    }
 
                 </InfiniteScroll>
             </Container>

@@ -11,22 +11,67 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-
-[type="file"]::-webkit-file-upload-button {
-  background: #1976d2;
-  border: 1px solid #1976d2;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 12px;
-  outline: none;
-  padding: 10px 25px;
-  text-transform: uppercase;
-  transition: all 250ms cubic-bezier(0.4,0,0.2,1) 0ms,box-shadow 250ms cubic-bezier(0.4,0,0.2,1) 0ms,border-color 250ms cubic-bezier(0.4,0,0.2,1) 0ms, color 250ms cubic-bezier(0.4,0,0.2,1) 0ms;
+/* scrollbars  */
+#scrollable1,
+#scrollable2{
+    height: 420px;
+    overflow-y: auto;
+}
+#scrollable1::-webkit-scrollbar,
+#scrollable2::-webkit-scrollbar {
+    width: 12px;
+}
+#scrollable1::-webkit-scrollbar-track,
+#scrollable2::-webkit-scrollbar-track{
+    background: rgb(90, 89, 89); 
+    margin-left: 10px;
+    z-index: 999;
+}
+#scrollable1::-webkit-scrollbar-thumb,
+#scrollable2::-webkit-scrollbar-thumb {
+    background: #fff; 
+    border-radius: 15px;
+    border: 2px solid rgb(90, 89, 89);
+}
+#scrollable1::-webkit-scrollbar-thumb:hover, 
+#scrollable2::-webkit-scrollbar-thumb:hover{
+    background: #fff; 
+}
+input[type="file"]
+{
+  display: none;
 }
 
-[type="file"]::-webkit-file-upload-button:hover {
-  background: #fff;
-  color: #1976d2;
+input[type = file]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+ input[type='file']::placeholder {
+    color:rgb(133,130,130);
+    opacity: 1;
+}
+.file-upload{
+    padding-top: 16px;
+    padding-bottom: 5px;
+    border: 2px solid #666666;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.file-upload input{
+    border: none;
+    padding: 0px 26px 5px 0px !important;
+    font-size: 18px;
+}
+.file-upload input:focus{
+    box-shadow: none;
+    border: none;
+}
+.file-upload label{
+    cursor: pointer;
+    font-size: 28px;
+    color: #646566;
+}
+.file-upload svg{
+    margin-left: 10px;
 }

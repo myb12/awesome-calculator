@@ -7,7 +7,7 @@ const ResultProvider = ({ children }) => {
     const [results, setResults] = useState([]);
     const [calculations, setCalculations] = useState([]);
     const [disable, setDisable] = useState(false);
-    
+
     useEffect(() => {
         axios.get('http://localhost:5000/results')
             .then(res => {

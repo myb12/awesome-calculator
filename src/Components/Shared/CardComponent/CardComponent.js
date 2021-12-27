@@ -1,6 +1,4 @@
-import React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
+import React from 'react'
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import { useStyles } from './CardComponentStyles'
@@ -8,21 +6,17 @@ import { useStyles } from './CardComponentStyles'
 const CardComponent = ({ calculation, handleModalOpen }) => {
     const classes = useStyles();
     return (
-        <Card sx={{ my: 2 }}>
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {calculation.title}
+        <Box className={classes.card}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
+                <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+                    = {calculation.output}
+                    <span style={{ fontSize: 18, fontWeight: 700, marginLeft: 16 }}>{calculation.title}</span>
                 </Typography>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
-                    <Typography >
-                        = {calculation.output}
-                    </Typography>
-                    <Box className={classes.seeInputBtn} onClick={() => handleModalOpen(calculation._id)}>
-                        See Input
-                    </Box>
+                <Box className={classes.seeInputBtn} onClick={() => handleModalOpen(calculation._id)}>
+                    See Input
                 </Box>
-            </CardContent>
-        </Card>
+            </Box>
+        </Box>
     );
 }
 
