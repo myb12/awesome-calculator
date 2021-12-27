@@ -7,6 +7,7 @@ import { useStyles } from '../Home/HomeStyles';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import CardComponent from '../Shared/CardComponent/CardComponent';
 import Modal from '../Shared/Modal/Modal';
+import SweetAlertComponent from '../Shared/SweetAlertComponent/SweetAlertComponent';
 
 const ScreenB = () => {
     const { results, calculations, setCalculations } = useResults();
@@ -14,10 +15,9 @@ const ScreenB = () => {
     const [endIndex, setEndIndex] = useState(3);
     const calculationsToShow = calculations.slice(0, endIndex);
     const [open, setOpen] = useState(false);
+    const [seeInput, setSeeInput] = useState(false);
 
-    useEffect(() => {
-        setCalculations(results);
-    }, [results, setCalculations])
+    console.log(calculations);
 
 
     const fetchMore = () => {
@@ -26,12 +26,14 @@ const ScreenB = () => {
         }, 1000);
     };
 
-    const handleModalOpen = () => {
+    const handleModalOpen = (id) => {
         setOpen(true);
+        const specific = calculations.find(calc => calc._id === id);
+        setSeeInput(specific);
     };
     return (
         <>
-            <Modal open={open} setOpen={setOpen} />
+            <Modal open={open} setOpen={setOpen} seeInput={seeInput} />
             <HeaderComponent />
             <Container maxWidth="sm" sx={{ mt: 2 }} id="scrollableDiv"
                 style={{
@@ -48,6 +50,7 @@ const ScreenB = () => {
                         <Typography variant='h5'>
                             Total Result : {calculations.length}
                         </Typography>
+                        <SweetAlertComponent />
                     </Box>
                 </Box>
 

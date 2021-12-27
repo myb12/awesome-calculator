@@ -4,6 +4,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
+import { Box } from '@mui/system';
+import { Typography } from '@mui/material';
 
 export default function Modal({ open, setOpen, seeInput }) {
     const { title, value, fileName, output } = seeInput;
@@ -20,28 +22,28 @@ export default function Modal({ open, setOpen, seeInput }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <div style={{ width: 280 }}>
+                <div style={{ maxWidth: 400 }}>
                     <DialogContent>
-                        <DialogContentText id="alert-dialog-description">
-                            {fileName}
-                        </DialogContentText>
-                        <DialogContentText id="alert-dialog-description">
-                            {title}
-                        </DialogContentText>
-                        <DialogContentText id="alert-dialog-description">
-                            {value}
-                        </DialogContentText>
-                        <DialogContentText id="alert-dialog-description">
-                            {output}
-                        </DialogContentText>
-                    </DialogContent>
+                        <Box sx={{ my: 2 }}>
+                            <span style={{ fontSize: 20, fontWeight: 700 }}>File Name:</span> {fileName}
+                        </Box>
+                        <Box sx={{ my: 2 }}>
+                            <span style={{ fontSize: 20, fontWeight: 700 }}>Title:</span> {title}
+                        </Box>
+                        <Box sx={{ my: 2 }}>
+                            <span style={{ fontSize: 20, fontWeight: 700 }}>Input:</span> {value}
+                        </Box>
+                        <Box sx={{ my: 2 }}>
+                            <span style={{ fontSize: 20, fontWeight: 700 }}>Output:</span> {output}
+                        </Box>
+                    </DialogContent >
                     <DialogActions>
                         <Button onClick={handleClose} autoFocus>
                             OK
                         </Button>
                     </DialogActions>
-                </div>
-            </Dialog>
-        </div>
+                </div >
+            </Dialog >
+        </div >
     );
 }

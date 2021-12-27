@@ -6,10 +6,12 @@ import { Draggable } from 'react-beautiful-dnd';
 import { Droppable } from 'react-beautiful-dnd';
 import { DragDropContext } from 'react-beautiful-dnd';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import useResults from '../../hooks/useResults';
 import CardComponent from '../Shared/CardComponent/CardComponent';
 import HeaderComponent from '../Shared/HeaderComponent/HeaderComponent';
 import Modal from '../Shared/Modal/Modal';
+import SweetAlertComponent from '../Shared/SweetAlertComponent/SweetAlertComponent';
 import { useStyles } from './HomeStyles'
 
 const calculationsData = [
@@ -66,7 +68,7 @@ const calculationsData = [
 ]
 
 const Home = () => {
-    const { results, calculations, setCalculations } = useResults();
+    const { results, calculations, setCalculations, disable, setDisable } = useResults();
     const [file, setFile] = useState(null);
     const [value, setValue] = useState('');
     const [title, setTitle] = useState('');
@@ -74,11 +76,11 @@ const Home = () => {
     const calculationsToShow = calculations.slice(0, endIndex);
     const [open, setOpen] = useState(false);
     const [seeInput, setSeeInput] = useState(false);
-    const classes = useStyles();
+    const [show, setShow] = useState(false);
+    const [message, setMessage] = useState('');
+    const history = useHistory();
 
-    useEffect(() => {
-        setCalculations(results);
-    }, [results, setCalculations])
+    const classes = useStyles();
 
     const handleModalOpen = (id) => {
         setOpen(true);
@@ -112,11 +114,13 @@ const Home = () => {
         setTitle(e.target.value);
     }
 
-    const handleCalculate = () => {
+
+    const handleCalculate = (e) => {
         const regex = /^[-+]?\d*\.?\d+(?:[-+*/]?\d+)+?$/;
         const formData = new FormData();
 
         if (regex.test(value)) {
+            setDisable(true);
             const resultValue = eval(value);
 
             formData.append('title', title);
@@ -125,18 +129,30 @@ const Home = () => {
             formData.append('file', file);
 
 
-            axios.post('http://localhost:5000/addCalculation', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            })
-                .then(res => {
-                    if (res) {
-                        console.log('calculated');
+            setTimeout(() => {
+                axios.post('http://localhost:5000/addCalculation', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
                     }
                 })
+                    .then(res => {
+                        if (res) {
+                            console.log('calculated');
+                            setDisable(false);
+                            setMessage('Successfully calculated!');
+                            setShow(true);
+                            e.target.reset();
+                            setTimeout(() => {
+                                setShow(false);
+                            }, 3000)
+                        }
+                    })
+            }, 15000)
+        } else {
+            setMessage('File type not supported! Please insert a .txt file.');
+            setShow(true);
         }
-
+        e.preventDefault();
     }
 
     const fetchMore = () => {
@@ -148,6 +164,7 @@ const Home = () => {
     return (
         <div >
             <Modal open={open} setOpen={setOpen} seeInput={seeInput} />
+            <SweetAlertComponent show={show} setShow={setShow} message={message} />
             <HeaderComponent />
             <Container maxWidth="sm" sx={{ mt: 2 }} id="scrollableDiv"
                 style={{
@@ -166,7 +183,7 @@ const Home = () => {
                         </Typography>
                     </Box>
                     <Box>
-                        <Button variant="contained">All results</Button>
+                        <Button onClick={() => history.push('/screen-b')}>All results</Button>
                     </Box>
                 </Box>
 
@@ -204,20 +221,26 @@ const Home = () => {
                 <Divider />
             </Container>
             <Container maxWidth="sm" sx={{ mt: 2, }}>
-                <Grid container spacing={2}>
-                    <Grid item md={6} >
-                        <TextField
-                            label="Title"
-                            id="outlined-size-small"
-                            size="small"
-                            onBlur={handleTitle}
-                        />
+                <form onSubmit={handleCalculate}>
+                    <Grid container spacing={2}>
+                        <Grid item md={6} >
+                            <TextField
+                                label="Title"
+                                id="outlined-size-small"
+                                size="small"
+                                onBlur={handleTitle}
+                            />
+                        </Grid>
+                        <Grid item md={6}>
+                            <input type="file" id="img" name="img" accept=".txt" onChange={handleFileChange} />
+                        </Grid>
                     </Grid>
-                    <Grid item md={6}>
-                        <input type="file" id="img" name="img" accept=".txt" onChange={handleFileChange} />
-                    </Grid>
-                </Grid>
-                <Button variant="contained" sx={{ mt: 2, }} onClick={handleCalculate}>Contained</Button>
+                    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button disabled={disable} variant="outlined" sx={{ my: 2, }} type="submit">
+                            {disable ? 'Calculating Please wait...' : 'Calculate'}
+                        </Button>
+                    </Box>
+                </form>
             </Container>
         </div >
     );

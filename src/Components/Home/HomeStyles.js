@@ -21,7 +21,7 @@ export const useStyles = makeStyles({
             height: 5,
             width: 30,
             bottom: -3,
-            left: 48
+            left: 'calc(50% - 15px)'
         },
     }
 });
