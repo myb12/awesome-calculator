@@ -56,7 +56,7 @@ const Home = () => {
             .then(res => res.json())
             .then(data => { })
     }
-    
+
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
         const reader = new FileReader();
@@ -192,6 +192,7 @@ const Home = () => {
                             Input
                         </Typography>
                         <TextField
+                            required
                             label="Calculation title"
                             id="outlined-size-small"
                             size="small"

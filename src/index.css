@@ -42,7 +42,7 @@ code {
 /************Styles for file upload input field************/
 input[type="file"]
 {
-  display: none;
+    color:#666;
 }
 
 input[type = file]::-webkit-file-upload-button {
@@ -63,7 +63,6 @@ input[type = file]::-webkit-file-upload-button {
 }
 .file-upload input{
     border: none;
-    padding: 0px 26px 5px 0px !important;
     font-size: 18px;
 }
 .file-upload input:focus{
@@ -72,7 +71,7 @@ input[type = file]::-webkit-file-upload-button {
 }
 .file-upload label{
     cursor: pointer;
-    font-size: 28px;
+    font-size: 30px;
     color: #646566;
 }
 .file-upload svg{
