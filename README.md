@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+## Awesome calculator - A simple clculator to calculate equation from your text file!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Live-link: https://awesome-calculator-myb.netlify.app/
+## Client-Side-link: https://github.com/myb12/awesome-calculator
+## Server-Site-link: https://github.com/myb12/awesome-calculator-server
 
-## Available Scripts
+### API Links
+## Results View: https://warm-inlet-27539.herokuapp.com/results
+## Calculation add: https://warm-inlet-27539.herokuapp.com/addCalculation
+## Result update: https://warm-inlet-27539.herokuapp.com/update-results
 
-In the project directory, you can run:
+### To run locally
+* Simply clone the repository. Run "npm install" command.
+* Run "npm start" command.
 
-### `npm start`
+## Tools used to build this project
+## Front End
+* ReactJs - v17.0.2
+* Context API
+* Axios - v0.24.0
+* React Hook
+* React Router - v5.3.0
+* React Icons - v4.3.1
+* Material UI - v5.2.5
+* CSS 
+* JSS 
+* react-beautiful-dnd - v13.1.0
+* react-drag-drop-files - v2.2.2
+* react-infinite-scroll-component - v6.1.0
+* string-math - v1.2.2
+* sweetalert-react - v0.4.11
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Back End
+* NodeJs - v16.13.1
+* Express - v4.17.2
+* MongoDB - v4.2.2
+* Cors Middleware - v
+* Dotenv - v
+* Multer - v1.4.4
+* Path - v0.12.7
