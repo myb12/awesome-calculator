@@ -14,6 +14,7 @@ import Modal from '../Shared/Modal/Modal';
 import SweetAlertComponent from '../Shared/SweetAlertComponent/SweetAlertComponent';
 import { useStyles } from './HomeStyles';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
+import stringMath from 'string-math';
 
 const Home = () => {
     const { calculations, setCalculations, disable, setDisable } = useResults();
@@ -31,6 +32,7 @@ const Home = () => {
     const history = useHistory();
 
     const classes = useStyles();
+
 
     const handleModalOpen = (id) => {
         setOpen(true);
@@ -80,7 +82,7 @@ const Home = () => {
 
         if (regex.test(value)) {
             setDisable(true);
-            const resultValue = eval(value);
+            const resultValue = stringMath(value);
 
             formData.append('title', title);
             formData.append('value', value);
