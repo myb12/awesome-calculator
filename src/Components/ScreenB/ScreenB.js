@@ -77,7 +77,7 @@ const ScreenB = () => {
                         </>
                     }
                     {
-                        <p style={{ textAlign: 'center' }}>{bottom && 'All results are revealed'}</p>
+                        <p style={{ textAlign: 'center' }}>{bottom && 'All results have been revealed'}</p>
                     }
 
                 </InfiniteScroll>

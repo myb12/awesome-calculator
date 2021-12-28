@@ -46,7 +46,7 @@ const Home = () => {
         items.splice(result.destination.index, 0, reorderedItem);
         setCalculations(items);
 
-        fetch('http://localhost:5000/update-results', {
+        fetch('https://warm-inlet-27539.herokuapp.com/update-results', {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -55,9 +55,8 @@ const Home = () => {
         })
             .then(res => res.json())
             .then(data => { })
-
     }
-
+    
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
         const reader = new FileReader();
@@ -88,9 +87,8 @@ const Home = () => {
             formData.append('output', resultValue);
             formData.append('file', file);
 
-
             setTimeout(() => {
-                axios.post('http://localhost:5000/addCalculation', formData, {
+                axios.post('https://warm-inlet-27539.herokuapp.com/addCalculation', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -139,7 +137,7 @@ const Home = () => {
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', }}>
                     <Box>
-                        <Typography variant='h5' sx={{ fontWeight: 700,color:'#666' }}>
+                        <Typography variant='h5' sx={{ fontWeight: 700, color: '#666' }}>
                             Total Result : {calculations.length}
                         </Typography>
                     </Box>
@@ -176,7 +174,7 @@ const Home = () => {
                                             <Skeleton />
                                         </>
                                     }
-                                    <p style={{ textAlign: 'center' }}>{bottom && 'All results are revealed'}</p>
+                                    <p style={{ textAlign: 'center' }}>{bottom && 'All results have been revealed'}</p>
                                 </InfiniteScroll>
                                 {provided.placeholder}
                             </div>
@@ -189,7 +187,7 @@ const Home = () => {
 
             <Container maxWidth="sm" sx={{ borderLeft: '2px solid #666', borderRight: '2px solid #666', borderBottom: '2px solid #666' }}>
                 <form onSubmit={handleCalculate}>
-                    <Box sx={{ mb: 2,pt:2 }}>
+                    <Box sx={{ mb: 2, pt: 2 }}>
                         <Typography variant="h4" sx={{ mb: 1, color: '#666', fontWeight: 700 }}>
                             Input
                         </Typography>
@@ -198,7 +196,7 @@ const Home = () => {
                             id="outlined-size-small"
                             size="small"
                             onBlur={handleTitle}
-                            className={classes.root}
+                            className={classes.textField}
                             sx={{ width: '100%' }}
                         />
                     </Box>

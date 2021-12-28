@@ -11,7 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/* scrollbars  */
+
+/************ Styles for scrollbar************/
 #scrollable1,
 #scrollable2{
     height: 420px;
@@ -37,6 +38,8 @@ code {
 #scrollable2::-webkit-scrollbar-thumb:hover{
     background: #fff; 
 }
+
+/************Styles for file upload input field************/
 input[type="file"]
 {
   display: none;

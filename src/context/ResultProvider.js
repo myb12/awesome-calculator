@@ -9,7 +9,7 @@ const ResultProvider = ({ children }) => {
     const [disable, setDisable] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/results')
+        axios.get('https://warm-inlet-27539.herokuapp.com/results')
             .then(res => {
                 if (res) {
                     const data = res.data?.reverse();
