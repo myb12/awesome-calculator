@@ -9,7 +9,7 @@
 ### Calculation add: https://warm-inlet-27539.herokuapp.com/addCalculation
 ### Result update: https://warm-inlet-27539.herokuapp.com/update-results
 
-### To run locally
+## To run locally
 * Simply clone the repository. Run "npm install" command.
 * Run "npm start" command.
 
