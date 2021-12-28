@@ -1,13 +1,13 @@
-## Awesome calculator - A simple clculator to calculate equation from your text file!
+# Awesome calculator - A simple clculator to calculate equation from your text file!
+## Important Links
+### Live-link: https://awesome-calculator-myb.netlify.app/
+### Client-Side-link: https://github.com/myb12/awesome-calculator
+### Server-Site-link: https://github.com/myb12/awesome-calculator-server
 
-## Live-link: https://awesome-calculator-myb.netlify.app/
-## Client-Side-link: https://github.com/myb12/awesome-calculator
-## Server-Site-link: https://github.com/myb12/awesome-calculator-server
-
-### API Links
-## Results View: https://warm-inlet-27539.herokuapp.com/results
-## Calculation add: https://warm-inlet-27539.herokuapp.com/addCalculation
-## Result update: https://warm-inlet-27539.herokuapp.com/update-results
+## API Links
+### Results View: https://warm-inlet-27539.herokuapp.com/results
+### Calculation add: https://warm-inlet-27539.herokuapp.com/addCalculation
+### Result update: https://warm-inlet-27539.herokuapp.com/update-results
 
 ### To run locally
 * Simply clone the repository. Run "npm install" command.
